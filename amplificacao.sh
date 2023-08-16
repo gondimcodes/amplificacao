@@ -4,7 +4,7 @@
 # pelo uso desse script.
 # Autor: Marcelo Gondim - gondim at gmail.com
 # Data: 18/02/2023
-# Versao: 2.6
+# Versao: 2.7
 #
 vermelho='\033[0;31m'
 verde='\033[0;32m'
@@ -162,7 +162,7 @@ fi
 
 ntp() {
 echo -e "Testando NTP (123/udp): \c"
-if [ "`ntpq -c rv $1 2>&1 | grep -i \"timed out\"`" == "" ]; then
+if [ "`ntpq -c rv $1 2>&1 | grep -i \"version\"`" != "" ]; then
    echo -e "${vermelho}Aberta${semcor}"
 else
    if [ "`fping $1 2> /dev/null | grep -i 'alive'`" != "" ]; then
