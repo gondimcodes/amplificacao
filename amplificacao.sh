@@ -4,7 +4,7 @@
 # pelo uso desse script.
 # Autor: Marcelo Gondim - gondim at gmail.com
 # Data: 18/02/2023
-# Versao: 2.7
+# Versao: 2.8
 #
 vermelho='\033[0;31m'
 verde='\033[0;32m'
@@ -264,6 +264,19 @@ else
 fi
 }
 
+slp() {
+echo -e "Testando SLP (427/udp): \c"
+if [ "`printf "\x02\x01\x00\x00\x36\x20\x00\x00\x00\x00\x00\x01\x00\x02\x65\x6e\x00\x00\x00\x15\x73\x65\x72\x76\x69\x63\x65\x3a\x73\x65\x72\x76\x69\x63\x65\x2d\x61\x67\x65\x6e\x74\x00\x07\x64\x65\x66\x61\x75\x6c\x74\x00\x00\x00\x00" | nc -w 3 -u $1 427 | hexdump -C`" != "" ]; then
+   echo -e "${vermelho}Aberta${semcor}"
+else
+   if [ "`fping $1 2> /dev/null | grep -i 'alive'`" != "" ]; then
+      echo -e "${verde}Fechada${semcor}"
+   else
+      echo -e "${azul}Inconclusivo${semcor}"
+   fi
+fi
+}
+
 mt4145() {
 echo -e "Testando MT4145 (4145/tcp): \c"
 if [ "`nmap -sT -pT:4145 -Pn -n $1|grep open|awk '{print $2}'`" == "open" ]; then
@@ -307,6 +320,7 @@ if [ -z $2 ]; then
    memcached $1
    ws-discovery $1
    coap $1
+   slp $1
    mt4145 $1
    mt5678 $1
    dhcpdiscover $1
