@@ -4,7 +4,7 @@
 # pelo uso desse script.
 # Autor: Marcelo Gondim - gondim at gmail.com
 # Data: 18/02/2023
-# Versao: 2.8
+# Versao: 2.9
 #
 vermelho='\033[0;31m'
 verde='\033[0;32m'
