@@ -106,12 +106,8 @@ fi
 
 dns() {
 echo -e "Testando DNS (53/udp): \c"
-if [ -z "`host -W 5 google.com $1|grep -i \"connection timed out\"`" ]; then
-   if [ -z "`host -W 5 google.com $1|grep SERVFAIL`" -a -z "`host -W 5 google.com $1|grep REFUSED`" ]; then
+if [ -n "`host -W 5 google.com $1|grep -i \"google.com\"`" ]; then
       echo -e "${vermelho}Aberta${semcor}"
-   else
-      echo -e "${verde}Fechada${semcor}"
-   fi
 else
    if [ "`fping $1 2> /dev/null | grep -i 'alive'`" != "" ]; then
       echo -e "${verde}Fechada${semcor}"
