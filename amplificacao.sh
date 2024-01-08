@@ -4,7 +4,7 @@
 # pelo uso desse script.
 # Autor: Marcelo Gondim - gondim at gmail.com
 # Data: 18/02/2023
-# Versao: 2.9
+# Versao: 3.0
 #
 vermelho='\033[0;31m'
 verde='\033[0;32m'
@@ -119,7 +119,7 @@ fi
 
 mdns() {
 echo -e "Testando Multicast DNS (5353/udp): \c"
-if [ "`dig +timeout=1 @$1 -p 5353 ptr _services._dns-sd._udp.local | grep -i \"connection timed out\"`" == "" ]; then
+if [ "`dig +timeout=1 @$1 -p 5353 ptr _services._dns-sd._udp.local | grep \"NOERROR\"`" != "" ]; then
    echo -e "${vermelho}Aberta${semcor}"
 else
    if [ "`fping $1 2> /dev/null | grep -i 'alive'`" != "" ]; then
